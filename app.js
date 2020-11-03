@@ -6,6 +6,7 @@ const cors = require('cors')
 const morgan = require('morgan');
 const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3000
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017'+ 'full-stack-app1'
 
 // middleware to help with the form submission
 app.use(express.urlencoded({extended:true}))
@@ -21,7 +22,7 @@ app.listen(PORT, () => {
 
 
 // mongoose connection logic
-mongoose.connect('mongodb://localhost:27017/project2', { useNewUrlParser: true, useUnifiedTopology: true } );
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 mongoose.connection.once('open', ()=> {
     console.log('connected to mongo');
 });
