@@ -5,6 +5,7 @@ const methodOverride = require('method-override')
 const cors = require('cors')
 const morgan = require('morgan');
 const bodyParser = require('body-parser')
+const PORT = process.env.PORT || 3000
 
 // middleware to help with the form submission
 app.use(express.urlencoded({extended:true}))
@@ -12,6 +13,11 @@ app.use(methodOverride('_method'))
 
 app.use(morgan('tiny'));
 app.use(cors());
+app.use(bodyParser.json())
+
+app.listen(PORT, () => {
+    console.log(`listening on ${PORT}`);
+  })
 
 
 // mongoose connection logic
@@ -21,6 +27,6 @@ mongoose.connection.once('open', ()=> {
 });
 
 app.get('/', (req,res) => {
-
-})
+    res.send('hello world');
+});
 
