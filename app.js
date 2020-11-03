@@ -6,28 +6,46 @@ const cors = require('cors')
 const morgan = require('morgan');
 const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3000
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017'+ 'full-stack-app1'
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017' + 'full-stack-app1'
 
 // middleware to help with the form submission
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
 app.use(morgan('tiny'));
 app.use(cors());
 app.use(bodyParser.json())
 
+// Set port for app to listen to
 app.listen(PORT, () => {
     console.log(`listening on ${PORT}`);
-  })
+})
+
+// Require the message schema
+const Message = require('./models/messageOutline.js')
+
 
 
 // mongoose connection logic
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
-mongoose.connection.once('open', ()=> {
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connection.once('open', () => {
     console.log('connected to mongo');
 });
 
-app.get('/', (req,res) => {
-    res.send('hello world');
+// Show all messages
+app.get('/', (req, res) => {
+    res.render('index.ejs');
 });
 
+// Show page to create post
+app.get('/create', (req, res) => {
+    res.render('createPost.ejs');
+});
+
+// Post new message
+// post
+app.post('/', (req, res)=>{
+    Message.create(req.body, (error, createdMessage)=>{
+      res.redirect('/fruits');
+    })
+  })
