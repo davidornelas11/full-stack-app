@@ -34,7 +34,12 @@ mongoose.connection.once('open', () => {
 
 // Show all messages
 app.get('/', (req, res) => {
-    res.render('index.ejs');
+    Message.find({}, (error, allMessages) => {
+        res.render('index.ejs', {
+            Messages: allMessages
+        });
+    });
+    
 });
 
 // Show page to create post
@@ -43,9 +48,15 @@ app.get('/create', (req, res) => {
 });
 
 // Post new message
-// post
 app.post('/', (req, res)=>{
     Message.create(req.body, (error, createdMessage)=>{
-      res.redirect('/fruits');
+      res.redirect('/');
     })
   })
+
+// Delete
+app.delete('/:id', (req, res) => {
+    Message.findByIdAndRemove(req.params.id, { useFindAndModify: false }, (err, data)=>{
+      res.redirect('/') 
+    });
+  });

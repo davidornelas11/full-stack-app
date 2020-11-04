@@ -1,9 +1,11 @@
 const mongoose = require('mongoose')
 
 const messageSchema = new mongoose.Schema({
-  name:  { type: String, required: true },
-  message:  { type: String, required: true }
-}, {timestamps: true})
+    title: { type: String, required: true }, 
+    name: { type: String, required: true },
+    message: { type: String, required: true },
+    created: {type: Date, default: Date.now()}
+}, { timestamps: true })
 
 const Message = mongoose.model('Message', messageSchema)
 
