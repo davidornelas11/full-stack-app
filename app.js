@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
             Messages: allMessages
         });
     });
-    
+
 });
 
 // Show page to create post
@@ -47,16 +47,33 @@ app.get('/create', (req, res) => {
     res.render('createPost.ejs');
 });
 
-// Post new message
-app.post('/', (req, res)=>{
-    Message.create(req.body, (error, createdMessage)=>{
-      res.redirect('/');
-    })
-  })
 
-// Delete
-app.delete('/:id', (req, res) => {
-    Message.findByIdAndRemove(req.params.id, { useFindAndModify: false }, (err, data)=>{
-      res.redirect('/') 
+// Post new message
+app.post('/', (req, res) => {
+    Message.create(req.body, (error, createdMessage) => {
+        res.redirect('/');
+    })
+})
+
+// Show edit page
+app.get('/:id/edit', (req, res) => {
+    Message.findById(req.params.id, (err, foundMessage) => {
+        res.render('updateMessage.ejs',
+            {
+                Messages: foundMessage
+            })
+    })
+})
+
+app.put('/:id', (req, res) => {
+    Message.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedModel) => {
+        res.redirect('/');
     });
-  });
+});
+
+// Delete message
+app.delete('/:id', (req, res) => {
+    Message.findByIdAndRemove(req.params.id, { useFindAndModify: false }, (err, data) => {
+        res.redirect('/')
+    });
+});

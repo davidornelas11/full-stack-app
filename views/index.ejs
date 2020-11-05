@@ -52,6 +52,7 @@
       <form action="/<%= Messages[i].id %>?_method=DELETE" method="POST">
         <input class="btn btn-danger"type="submit" value="DELETE"/>
     </form>
+    <a class='btn btn-outline-secondary' href='<%= Messages[i].id %>/edit'> Edit</a>
     </div>
     <% } %>
   </div>
