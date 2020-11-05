@@ -41,7 +41,7 @@
   <div class="jumbotron" style='align-items:center;'>
     <h1 class="display-3" style='text-align: center;'>Message Feed</h1>
     <p class="lead">Messages are in chronological order</p>
-    <% for (let i = 0; i < Messages.length; i++) { %>
+    <% for (let i = Messages.length-1; i >=0; i--) { %>
     <div class="card border-dark mb-3" style="max-width: 30rem; margin: auto;">
       <div class="card-header"><%= Messages[i].name %></div>
       <div class="card-body">
